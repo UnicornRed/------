@@ -577,7 +577,21 @@
 	
 	Для нахождения оценки максимального правдоподобия необходимо продифференцировать это выражение и найти нуль производной, однако для данного случая будем оценивать параметры $ q $ и $ n $ численными методами многомерной оптимизации (функция \verb|optim| в R). Также для реальных оценок будем использовать численную оптимизацию по всем параметрам без метода моментов, чтобы увеличить точность.
 	
-	Оценка параметра $n$ производилась методом целочисленного тернарного поиска (деление отрезка на три части и выбор из двух средних точек максимальной для сужения интервала на котором точно есть экстремум).
+	\begin{figure}[!ht]
+		\centering
+		\includegraphics[width = 1\textwidth]{binomlogest}
+		\caption{Сходимость оценок параметров к истинному значению для биномиально-логарифмического распределения}
+		\label{img:binomlogest}
+	\end{figure}
+	
+	\begin{figure}[!ht]
+		\centering
+		\includegraphics[width = 1\textwidth]{logbinomest}
+		\caption{Сходимость оценок параметров к истинному значению для логарифмически-биномиального распределения}
+		\label{img:logbinomest}
+	\end{figure}
+
+	Оценка параметра $n$ производилась методом целочисленного тернарного поиска (деление отрезка на три части и выбор из двух средних точек максимальной для сужения интервала на котором точно есть экстремум). Оценки максимального правдоподобия являются состоятельными, в чём можем убедиться моделированием (рис.~\ref{img:binomlogest} и~\ref{img:logbinomest}), хотя сходимость для данных распределений медленная из-за оценки трёх параметров одновременно, а для биномиально-логарифмического при небольшом размере выборки оценки получаются смещёнными.
 	
 	Например, in vitro при $ 35 $ Гр получаем наилучшие оценки: $ n = 866, q = 0.1799, p = 0.0015$. Значимость согласия по критерию $ \chi ^2 $: $ p-value = 0.26 $. Результат представлен на рис. \ref{img:binlogexpprob}.
 	
@@ -809,15 +823,15 @@
 					&\quad= \lambda ^k \sum \limits _{j = 1} ^{k} (j - 1)! S(k, j) j \left(\frac m {1 - m}\right) ^{j - 1} \cdot \left(\frac {\lambda m} {1 - m} + \frac {\lambda m ^2} {(1 - m) ^2}\right) =\\
 					&\quad= \lambda ^{k + 1} \left(\sum \limits _{j = 1} ^{k} j! S(k, j) \left(\frac m {1 - m}\right) ^j + \sum \limits _{j = 1} ^{k} j! S(k, j) \left(\frac m {1 - m}\right) ^{j + 1}\right) =\\
 					&\quad= \lambda ^{k + 1} \left(\sum \limits _{j = 1} ^{k} j! S(k, j) \left(\frac m {1 - m}\right) ^j + \sum \limits _{j = 2} ^{k + 1} (j - 1)! S(k, j - 1) \left(\frac m {1 - m}\right) ^j\right) =\\
-				\end{aligned}
-			\]
-			\[
-				\begin{aligned}
 					&\quad= \lambda ^{k + 1} \left(S(k, 1) \frac m {1 - m} +\right.\\
 					&\quad~~ + \sum \limits _{j = 2} ^{k} \left(j! S(k, j) \left(\frac m {1 - m}\right) ^j + (j - 1)! S(k, j - 1) \left(\frac m {1 - m}\right) ^j\right) +\\
 					&\quad~~ \left.+ k ! S (k, k) \left(\frac m {1 - m}\right) ^{k + 1}\right) =\\
 					&\quad= \lambda ^{k + 1} \left(S(k + 1, 1) \frac m {1 - m} + \sum \limits _{j = 2} ^{k} (j - 1)! \left(j S(k, j) + S(k, j - 1)\right) \left(\frac m {1 - m}\right) ^j +\right.\\
 					&\quad~~\left.+ k ! s (k + 1, k + 1) \left(\frac m {1 - m}\right) ^{k + 1}\right) =\\
+				\end{aligned}
+			\]
+			\[
+				\begin{aligned}
 					&\quad= \lambda ^{k + 1} \left(S(k + 1, 1) \frac m {1 - m} + \sum \limits _{j = 2} ^{k} (j - 1)! S(k + 1, j) \left(\frac m {1 - m}\right) ^j +\right.\\
 					&\quad~~\left.+ k ! s (k + 1, k + 1) \left(\frac m {1 - m}\right) ^{k + 1}\right) =\\
 					&\quad=\lambda ^{k + 1} \sum \limits _{j = 1} ^{k + 1} (j - 1)! S(k + 1, j) \left(\frac m {1 - m}\right) ^j
@@ -852,7 +866,7 @@
 		\label{tab:stirling2}
 	\end{table}
 	
-	При этом для логарифмически-пуассоновского распределения можно получить формулу другого вида с другим классом чисел.
+	Для логарифмически-пуассоновского распределения можно получить формулу другого вида с другим классом чисел.
 	
 	\begin{theorem}
 		\label{theorem:probLPR2}
